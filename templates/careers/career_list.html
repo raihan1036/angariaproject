@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}চাকরির সুযোগ{% endblock %}
+
+{% block extra_css %}
+<style>
+    .career-section {
+        padding: 50px 0;
+        background-color: #f4f7f6; /* হালকা ব্যাকগ্রাউন্ড */
+    }
+    .career-container {
+        width: 90%;
+        max-width: 900px; /* কন্টেন্ট একটি নির্দিষ্ট প্রস্থের মধ্যে থাকবে */
+        margin: 0 auto;
+    }
+    .career-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .career-header h1 {
+        font-size: 2.8rem;
+        color: #0a2540;
+        margin-bottom: 15px;
+    }
+    .career-header p {
+        font-size: 1.1rem;
+        color: #555;
+    }
+
+    .job-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* --- নতুন জব কার্ড ডিজাইন --- */
+    
+
+/* --- MAIN CARD --- */
+.job-card {
+    background-color: white;
+    border-radius: 12px; /* Slightly rounder for modern look */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+    margin-bottom: 25px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between; /* Separates Left and Right */
+    align-items: stretch; /* Makes both sides equal height */
+    gap: 20px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    border: 1px solid #e0e0e0;
+    position: relative; /* Needed for full clickability */
+}
+
+.job-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    transform: translateY(-5px);
+    border-color: #0070f0; /* Optional: Highlight border on hover */
+}
+
+/* --- LEFT SIDE (TEXT) --- */
+.job-details-left {
+    flex: 1; /* Takes remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers text vertically */
+}
+
+.job-title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #0070f0;
+    margin: 0 0 5px 0;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.job-company {
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.job-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    color: #555;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+.job-description {
+    color: #555; 
+    margin-top: 10px; 
+    font-size: 0.9rem; 
+    line-height: 1.5;
+}
+
+/* --- RIGHT SIDE (IMAGE + DEADLINE) --- */
+.job-details-right {
+    flex-basis: 280px; /* Width of the right column */
+    min-width: 250px;  /* Don't get smaller than this */
+    display: flex;
+    flex-direction: column; /* Stacks Image on top of Deadline */
+    gap: 10px;
+}
+
+.job-image-box {
+    width: 100%;
+    height: 160px; /* Fixed height for the image */
+    background: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #eee;
+}
+
+.job-image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Fills the box completely */
+}
+
+/* --- DEADLINE UNDER IMAGE --- */
+.job-deadline-box {
+    text-align: center;
+    color: #d9534f; /* Red */
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 8px;
+    background-color: #fff5f5; /* Light Pink background */
+    border-radius: 6px;
+    border: 1px solid #ffcccc;
+}
+
+/* --- RESPONSIVE (Mobile) --- */
+@media (max-width: 768px) {
+    .job-card {
+        flex-direction: column-reverse; /* Image goes to top on mobile */
+    }
+    .job-details-right {
+        width: 100%;
+        flex-basis: auto;
+    }
+    .job-image-box {
+        height: 200px; /* Taller image on mobile */
+    }
+}
+
+
+
+
+
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="career-section">
+    <div class="career-container">
+        <header class="career-header">
+            <h1>চাকরির সুযোগ</h1>
+            <P><tag class="typewriter-effect" data-text="আমাদের সাথে আপনার ক্যারিয়ার গড়ুন।"></tag>
+            </P>
+        </header>
+        
+        <ul class="job-list">
+    {% for job in jobs %}
+    <li class="job-card" onclick="location.href='{% url 'job_detail' job.pk %}'" style="cursor: pointer;">
+        
+        <div class="job-details-left">
+            <a href="{% url 'job_detail' job.pk %}" class="job-title">{{ job.title }}</a>
+            <p class="job-company">{{ job.company_name }}</p>
+            
+            <div class="job-meta">
+                {% if job.location %}
+                <span class="job-meta-item">
+                    <i class="fas fa-map-marker-alt"></i> {{ job.location }}
+                </span>
+                {% endif %}
+                {% if job.experience %}
+                <span class="job-meta-item">
+                    <i class="fas fa-briefcase"></i> {{ job.experience }}
+                </span>
+                {% endif %}
+            </div>
+
+            {% if job.short_description %}
+                <p class="job-description">
+                    {{ job.short_description }}
+                </p>
+            {% endif %}
+        </div>
+
+        <div class="job-details-right">
+            {% if job.company_logo %}
+            <div class="job-image-box">
+                <img src="{{ job.company_logo.url }}" alt="{{ job.company_name }}">
+            </div>
+            {% endif %}
+
+            {% if job.application_deadline %}
+            <div class="job-deadline-box">
+                <i class="fas fa-calendar-times"></i> Deadline: {{ job.application_deadline|date:"d M Y" }}
+            </div>
+            {% endif %}
+        </div>
+
+    </li>
+    {% empty %}
+    <li class="job-card" style="text-align: center; display: block;">
+        <p>আপাতত কোনো চাকরির সার্কুলার নেই।</p>
+    </li>
+    {% endfor %}
+</ul>
+    </div>
+</section>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Select ALL elements with the class
+        const elements = document.querySelectorAll('.typewriter-effect');
+
+        // Loop through each element independently
+        elements.forEach(element => {
+            const text = element.getAttribute('data-text'); // Get the text from HTML
+            let index = 0;
+            
+            // Clear any existing content
+            element.innerHTML = "";
+
+            function type() {
+                if (index < text.length) {
+                    element.innerHTML += text.charAt(index);
+                    index++;
+                    setTimeout(type, 100); // Speed: 100ms
+                }
+            }
+
+            // Start typing for this specific element
+            type(); 
+        });
+    });
+</script>
+
+
+
+{% endblock content %}

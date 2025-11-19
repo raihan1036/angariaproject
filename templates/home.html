@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="hero-section">
+    {% if hero_images %}
+        {% with first_hero_image=hero_images.0 %}
+            <div class="hero-background" style="background-image: url('{{ first_hero_image.image.url }}');">
+                <div class="hero-overlay"></div> {# This is our gradient overlay #}
+            </div>
+        {% endwith %}
+    {% endif %}
+
+    <div class="hero-content container"> 
+        <div class="hero-text">
+            
+            <p>আপনার সঞ্চয়ের সুরক্ষা পেতে আবেদন করুন</p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdMOxTZDRNzz7qQLcBjNkBL6A1ipC3VSPPz3IKSKpLHFmR46Q/viewform" class="hero-btn" target="_blank">
+    আবেদন
+</a> 
+        </div>
+    </div>
+</section>
+
+<section class="container benefits-section">
+    <h1>আমাদের সুবিধাসমূহ</h1>
+    <div class="benefits-grid">
+        
+        <div class="benefit-item"><span>অর্থের</span><h2>সুরক্ষা</h2></div>
+        <div class="benefit-item"><span>দীর্ঘ মেয়াদী</span><h2>নিরাপত্তা</h2></div>
+        <div class="benefit-item"><span>অর্থের</span><h2>সঞ্চয়</h2></div>
+    </div>
+</section>
+
+<section class="features-section">
+    <div class="container">
+        <h2>আমাদের সঞ্চয়ের মেয়াদ</h2>
+        <div class="features-grid">
+            <div class="feature-item"><h4>১.৫ বছর</h4><p>১.৫ বছর মেয়াদী বইয়ে আমরা ৮% লাভ দিয়ে থাকি...</p></div>
+            <div class="feature-item"><h4>৩ বছর</h4><p>৩ বছর মেয়াদী বইয়ে আমরা ২০% লাভ দিয়ে থাকি...</p></div>
+            <div class="feature-item"><h4>৫ বছর</h4><p>৫ বছর মেয়াদী বইয়ে আমরা ৩০% লাভ দিয়ে থাকি...</p></div>
+            <div class="feature-item"><h4>১০ বছর</h4><p>১০ বছর মেয়াদী বইয়ে আমরা ৬৮% লাভ দিয়ে থাকি...</p></div>
+        </div>
+    </div>
+</section>
+
+<section class="icon-features-section">
+    <div class="typewriter-container">
+    <h2 id="typewriter-text"></h2>
+</div>
+        
+        <div class="icon-features-grid">
+
+            <div class="icon-feature-item">
+                <div class="icon-wrapper">
+                    <img src="{% static 'images/icon/award.png' %}" class="icon-static" alt="Award Icon">
+                    <img src="{% static 'images/icon/award.gif' %}" class="icon-animated" alt="Award Icon Animated">
+                </div>
+                <h4>সর্বোচ্চ লাভ</h4>
+                <p>আমাদের সমবায় সমিতিতে সঞ্চয়ের মাধ্যমে পাচ্ছেন সর্বোচ্চ লাভের নিশ্চয়তা।</p>
+            </div>
+
+            <div class="icon-feature-item">
+                <div class="icon-wrapper">
+                    <img src="{% static 'images/icon/briefcase.png' %}" class="icon-static" alt="Briefcase Icon">
+                    <img src="{% static 'images/icon/briefcase.gif' %}" class="icon-animated" alt="Briefcase Icon Animated">
+                </div>
+                <h4>চাকুরীর সুযোগ</h4>
+                <p>আমাদের সাথে নিজের দক্ষতা বৃদ্ধি ও মাসিক আয়ের সুবর্ন সুযোগ।</p> 
+            </div> 
+
+            <div class="icon-feature-item">
+                <div class="icon-wrapper">
+                    <img src="{% static 'images/icon/money-bag.png' %}" class="icon-static" alt="Money Bag Icon">
+                    <img src="{% static 'images/icon/money-bag.gif' %}" class="icon-animated" alt="Money Bag Icon Animated">
+                </div>
+                <h4>অর্থের সদ্যবহার</h4>
+                <p>আপনার সঞ্চয়ের অর্থ সঠিক নিয়মে জমা করার নিশ্চিত প্রদান করি।</p>
+            </div>
+
+            <div class="icon-feature-item">
+                <div class="icon-wrapper">
+                    <img src="{% static 'images/icon/support.png' %}" class="icon-static" alt="support Icon">
+                    <img src="{% static 'images/icon/support.gif' %}" class="icon-animated" alt="support Icon Animated">
+                </div>
+                <h4>বিশ্বস্ত সেবা</h4>
+                <p>সকল প্রকার বিশ্বস্ত সেবা স্বল্প শোধে প্রদান করা হয়।</p>  
+            </div>
+            <div class="icon-feature-item">
+                <div class="icon-wrapper">
+                    <img src="{% static 'images/icon/document.png' %}" class="icon-static" alt="documents Icon">
+                    <img src="{% static 'images/icon/document.gif' %}" class="icon-animated" alt="Document Icon Animated">
+                </div>
+                <h4>তথ্য নথিকরণ</h4>
+                <p>আপনার সকল তথ্য আমাদের নিকত নির্ভুল ভাবে নথিভুক্ত করা থাকবে</p>
+            </div><div class="icon-feature-item"> 
+                <div class="icon-wrapper">
+                    <img src="{% static 'images/icon/id.png' %}" class="icon-static" alt="id Icon">
+                    <img src="{% static 'images/icon/id.gif' %}" class="icon-animated" alt="id Icon Animated">
+                </div>
+                <h4>চাকুরী</h4>
+                <p>আকর্ষণীয় বেতনের সুযোগ প্রদান করা হবে</p> 
+            </div><div class="icon-feature-item">
+                <div class="icon-wrapper">
+                    <img src="{% static 'images/icon/idea.png' %}" class="icon-static" alt="Idea Icon">
+                    <img src="{% static 'images/icon/idea.gif' %}" class="icon-animated" alt="Idea Icon Animated">
+                </div>
+                <h4>ব্যবসায় সহযোগীতা</h4>
+                <p>আপনার ব্যবসায় উন্নয়নে নতুন নতুন ধারণা ও সমাধান নিয়েআমরা সর্বদা পাশে আছি।</p>
+            </div><div class="icon-feature-item">
+                <div class="icon-wrapper">
+                    <img src="{% static 'images/icon/save-money.png' %}" class="icon-static" alt="Save Money Icon">
+                    <img src="{% static 'images/icon/save-money.gif' %}" class="icon-animated" alt="Save Money Icon Animated">
+                </div>
+                <h4>সঞ্ছয়ে সুরক্ষা</h4>
+                <p>আপনার সঞ্চয় আমাদের নিকত নির্দিষ্ট সময়ের জন্য সুরক্ষিত থাকবে।</p> 
+            </div>
+            <div class="icon-feature-item">
+                <div class="icon-wrapper">
+                    <img src="{% static 'images/icon/social-care.png' %}" class="icon-static" alt="social-care Icon">
+                    <img src="{% static 'images/icon/social-care.gif' %}" class="icon-animated" alt="social-care Icon Animated">
+                </div>
+                <h4>ফিল্ড অফিসার</h4>
+                <p>আপনার সঞ্চয়ের অর্থ সঠিক সময়ে পৌঁছানোর জন্য শতাধিক ফিল্ড অফিসার নিযুক্ত রয়েছে।</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="contact-map-section">
+    <div class="container"> <div class="contact-layout" style="display: flex; gap: 2rem; flex-wrap: wrap;">
+            
+            <div class="contact-info-left" style="flex: 1; min-width: 300px;">
+                {% if contact_data %}
+                    <h2>{{ contact_data.title }}</h2>
+                    
+                    <p style="font-size: 1.1rem; line-height: 1.8; white-space: pre-line;">
+                        {{ contact_data.content }}
+                    </p>
+                {% else %}
+                    <h2>আমাদের শাখার অবস্থান</h2>
+                    <p>অনুগ্রহ করে অ্যাডমিন প্যানেল থেকে তথ্য যোগ করুন।</p>
+                {% endif %}
+            </div>
+
+            <div class="contact-map-right" style="flex: 1; min-width: 300px;">
+                <div id="map" style="height: 400px; width: 100%; border-radius: 8px; z-index: 1;"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    // Map Javascript
+    var map = L.map('map').setView([23.8103, 90.4125], 8);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19
+    }).addTo(map);
+
+    var branchesData = {{ branches|safe }}; 
+
+    if (branchesData && Array.isArray(branchesData)) {
+        branchesData.forEach(branch => {
+            L.marker([branch.lat, branch.lng])
+                .addTo(map)
+                .bindPopup("<b>" + branch.name + "</b>");
+        });
+    }
+</script>
+
+
+
+</section>
+
+<section class="products-showcase-section">
+    <div class="container">
+        <h2>আমাদের অন্যান্য পণ্যসমূহ</h2>
+        
+        <div class="product-slider-wrapper">
+            
+            <button class="scroll-btn left-btn" id="scrollLeftBtn">&#10094;</button>
+
+            <div class="product-scroll-container" id="productContainer">
+
+                {% for product in products %}
+                <div class="product-item">
+                    <div class="product-image-wrapper">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        {% endif %}
+                    </div>
+                    
+                    <h4>{{ product.name }}</h4>
+                    
+                    <p class="product-price">
+    {% if product.price %}
+        {# If a price exists, show the Taka sign and the number #}
+        ৳{{ product.price }} 
+    {% else %}
+        {# If no price exists, show this text instead #}
+        <span style="font-size: 16px; color: #666;"> </span>
+    {% endif %}
+    
+    {% if product.old_price %}
+        <span>৳{{ product.old_price }}</span>
+    {% endif %}
+</p>
+                    
+                    <p class="product-specs">{{ product.description|truncatechars:60 }}</p>
+                    
+                    <a href="#" class="product-btn">বিস্তারিত দেখুন</a>
+                </div>
+                {% empty %}
+                <div class="product-item">
+                    <p style="padding:20px;">কোন পণ্য পাওয়া যায়নি (No products added yet)</p>
+                </div>
+                {% endfor %}
+
+            </div>
+
+            <button class="scroll-btn right-btn" id="scrollRightBtn">&#10095;</button>
+        
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const container = document.getElementById('productContainer');
+        const leftBtn = document.getElementById('scrollLeftBtn');
+        const rightBtn = document.getElementById('scrollRightBtn');
+
+        // Scroll amount (300px is roughly the width of one card)
+        const scrollAmount = 300;
+
+        leftBtn.addEventListener('click', () => {
+            container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        });
+
+        rightBtn.addEventListener('click', () => {
+            container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        });
+    });
+</script>
+
+<!-- ######################################################################--> 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const text = "আমাদের অন্যান্য সুবিধাসমূহ"; // The text to type
+        const element = document.getElementById('typewriter-text');
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                element.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 100); // Speed: 100ms per letter
+            }
+        }
+
+        // Start the typing when the page loads
+        typeWriter();
+    });
+</script>
+
+
+
+{% endblock content %}

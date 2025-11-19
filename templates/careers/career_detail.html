@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ job.title }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .post-detail-section { padding: 60px 0; background-color: #f4f7f6; }
+    .post-detail-container { 
+        max-width: 900px; 
+        margin: 0 auto; 
+        background-color: white; 
+        border-radius: 10px; 
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08); 
+        overflow: hidden; 
+    }
+    .post-detail-content-area { padding: 40px; }
+    
+    .post-detail-header h1 { 
+        font-size: 2.5rem; 
+        color: #0a2540; 
+        margin: 0 0 10px 0; 
+    }
+    .post-detail-header .job-company { 
+        font-size: 1.3rem; 
+        color: #333; 
+        font-weight: bold; 
+        margin-bottom: 25px; 
+    }
+
+    .job-meta-info { 
+        background-color: #f9f9f9; 
+        padding: 20px; 
+        border-radius: 8px; 
+        margin-bottom: 30px; 
+        display: flex; 
+        flex-wrap: wrap; 
+        gap: 25px; 
+    }
+    .job-meta-info p { 
+        margin: 5px 0; 
+        font-size: 1.1rem; 
+        display: flex; 
+        align-items: center; 
+        gap: 8px; 
+    }
+    .job-meta-info p i { color: #0070f0; }
+
+    .post-detail-content { 
+        color: #333; 
+        font-size: 1.1rem; 
+        line-height: 1.8; 
+        text-align: justify; 
+    }
+    .post-detail-content p { margin-bottom: 1em; }
+    .post-detail-content h3 { 
+        color: #0a2540; 
+        margin-top: 30px; 
+        margin-bottom: 15px;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="post-detail-section">
+    <div class="post-detail-container">
+        <div class="post-detail-content-area">
+            <header class="post-detail-header">
+                <h1>{{ job.title }}</h1>
+                <p class="job-company">{{ job.company_name }}</p>
+            </header>
+            
+            <div class="job-meta-info">
+                {% if job.location %}
+                    <p><i class="fas fa-map-marker-alt"></i> <b>কাজের স্থান:</b> {{ job.location }}</p>
+                {% endif %}
+                {% if job.experience %}
+                    <p><i class="fas fa-briefcase"></i> <b>অভিজ্ঞতা:</b> {{ job.experience }}</p>
+                {% endif %}
+                {% if job.application_deadline %}
+                    <p style="color: red;"><i class="fas fa-calendar-times"></i> <b>আবেদনের শেষ তারিখ: {{ job.application_deadline|date:"F d, Y" }}</b></p>
+                {% endif %}
+            </div>
+
+            <section class="post-detail-content">
+                {% if job.short_description %}
+                    <p><i>{{ job.short_description }}</i></p>
+                {% endif %}
+
+                <h3>চাকরির বিস্তারিত বিবরণ</h3>
+                {{ job.description|linebreaks }}
+            </section>
+        </div>
+    </div>
+</section>
+{% endblock content %}

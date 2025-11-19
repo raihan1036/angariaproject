@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    /* আমরা base.html-এর মেইন কন্টেন্টকে ওভাররাইড করবো */
+    main {
+        padding: 0 !important; /* base.html-এর প্যাডিং বাদ দিন */
+    }
+
+    .login-page-body {
+        /* একটি ডার্ক পার্পল গ্র্যাডিয়েন্ট ব্যাকগ্রাউন্ড */
+        background: linear-gradient(135deg, #1a0b2e, #3a1c5a);
+        color: white;
+        min-height: 90vh; /* নেভিগেশন বার বাদে বাকি অংশ */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: sans-serif;
+    }
+
+    .login-container {
+        /* সেই গ্লাসি (Glassy) কন্টেইনার */
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px); /* Safari-এর জন্য */
+        border-radius: 20px;
+        padding: 2.5rem 3rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        width: 400px;
+        text-align: center;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    .login-container h2 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .input-group {
+        text-align: left;
+        margin-bottom: 1.5rem;
+    }
+
+    .input-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        color: #ddd;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 10px 0;
+        background: none;
+        border: none;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+        color: white;
+        font-size: 1rem;
+    }
+    .input-group input:focus {
+        outline: none;
+        border-bottom: 2px solid white;
+    }
+    
+    /* placeholder-এর রঙ সাদা করার জন্য */
+    .input-group input::placeholder {
+        color: #bbb;
+    }
+
+    .login-button {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 30px;
+        background: white;
+        color: #333;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 1rem;
+        transition: transform 0.2s;
+    }
+    .login-button:hover {
+        transform: scale(1.03);
+    }
+    
+    .links {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        margin-top: 1rem;
+    }
+    .links a {
+        color: #ddd;
+        text-decoration: none;
+    }
+
+    .register-link {
+        margin-top: 2rem;
+        font-size: 0.9rem;
+    }
+    .register-link a {
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    
+    /* Django-র এরর মেসেজ দেখানোর জন্য */
+    .error-message {
+        color: #ff8a80; /* হালকা লাল */
+        margin-bottom: 1rem;
+    }
+
+</style>
+
+<div class="login-page-body">
+
+    <div class="login-container">
+        <h2>Login</h2>
+
+        {% if form.errors %}
+            <p class="error-message">কে ভাই তুমি? পাসওয়ার্ড কি খেয়ে ফেলসো?.</p>
+        {% endif %}
+
+        <form method="post" class="login-form">
+            {% csrf_token %}
+            
+            <div class="input-group">
+                <label for="id_username">Email or Username</label>
+                <input type="text" name="username" id="id_username" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="id_password">Password</label>
+                <input type="password" name="password" id="id_password" required>
+            </div>
+            
+           
+            <button type="submit" class="login-button">Log in</button>
+            
+            
+        </form>
+    </div>
+
+</div>
+{% endblock content %}

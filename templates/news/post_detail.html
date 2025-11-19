@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .post-detail-section {
+        padding: 60px 0;
+        background-color: #f4f7f6;
+    }
+    .post-detail-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0; /* প্যাডিং ০ করে দিলাম */
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        overflow: hidden; /* ছবি যেন কন্টেইনারের বাইরে না যায় */
+    }
+    .post-detail-image {
+        width: 100%;
+        height: 400px; /* ছবির একটি নির্দিষ্ট উচ্চতা */
+        object-fit: cover;
+        margin-bottom: 30px;
+        /* বর্ডার রেডিয়াস সরিয়ে ফেলা হয়েছে, কারণ এটি এখন কন্টেইনারের সাথে মিশে যাবে */
+    }
+    .post-detail-content-area {
+        padding: 0 40px 40px 40px; /* ভেতরের কন্টেন্টের জন্য প্যাডিং */
+    }
+    .post-detail-header h1 {
+        font-size: 2.5rem;
+        color: #0a2540;
+        margin: 0 0 15px 0;
+        text-align: center;
+    }
+    .post-detail-header .post-date {
+        font-size: 1rem;
+        color: #888;
+        margin-bottom: 30px;
+        text-align: center;
+        display: block; /* সেন্টারে আনার জন্য */
+    }
+    .post-detail-content {
+        color: #333;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        text-align: justify; /* লেখার সারিবদ্ধতা */
+    }
+    .post-detail-content p {
+        margin-bottom: 1em; /* প্যারাগ্রাফের মধ্যে ফাঁকা স্থান */
+    }
+
+    @media (max-width: 768px) {
+        .post-detail-container {
+            margin: 20px 10px;
+        }
+        .post-detail-content-area {
+            padding: 0 20px 20px 20px;
+        }
+        .post-detail-header h1 {
+            font-size: 2rem;
+        }
+        .post-detail-image {
+            height: 250px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="post-detail-section">
+    <div class="post-detail-container">
+        {% if post.featured_image %}
+            <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="post-detail-image">
+        {% else %}
+            <img src="{% static 'images/default_news.png' %}" alt="Default News Image" class="post-detail-image">
+        {% endif %}
+
+        <div class="post-detail-content-area">
+            <header class="post-detail-header">
+                <h1>{{ post.title }}</h1>
+                <p class="post-date">{{ post.published_date|date:"F d, Y, h:i A" }}</p>
+            </header>
+            
+            <section class="post-detail-content">
+                {{ post.content|linebreaks }}
+            </section>
+        </div>
+    </div>
+</section>
+{% endblock content %}

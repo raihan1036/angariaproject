@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="bn"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angaria Project - {% block title %}Home{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    {% block extra_css %}{% endblock %}
+
+    <style>
+        .site-footer {
+            background-color: #1a1a1a; /* Dark background */
+            color: #a0a0a0;           /* Light gray text */
+            padding: 60px 0;
+            text-align: center;
+        }
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .footer-logo {
+            font-size: 2rem;       /* Large font size */
+            font-weight: 700;
+            color: #ffffff;        /* White color */
+            margin: 0 0 20px 0;
+        }
+        .footer-nav {
+            margin-bottom: 25px;
+        }
+        .footer-nav a {
+            display: inline-block;
+            color: #ffffff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0 12px;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+        .footer-nav a:hover {
+            color: #007bff; /* Change color on hover */
+        }
+        .footer-social {
+            margin-bottom: 30px;
+        }
+        .footer-social a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            color: #ffffff;
+            border: 1px solid #444;
+            border-radius: 50%; /* Circle */
+            text-decoration: none;
+            margin: 0 5px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .footer-social a:hover {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .footer-copyright {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        .footer-copyright .heart {
+            color: #ff0000; /* Makes the heart red */
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container"> 
+            <div class="top-bar">
+               <div class="top-left">
+    <div class="ticker-window">
+        <div class="ticker-content">
+            <span>স্বাগতম! আপনি আছেন: <strong>আঙ্গারিয়া ক্ষুদ্র ব্যবসায়ী সমবায় সমিতি লিঃ এর অফিসিয়াল ওয়েবসাইটে।</strong></span> 
+        </div>
+    </div>
+</div>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="{% url 'home' %}" class="logo">
+                    <img src="{% static 'images/logo.png' %}" alt="Angaria Samity Logo">
+                    <span>আঙ্গারিয়া ক্ষুদ্র ব্যবসায়ী সমবায় সমিতি লিঃ</span>
+                </a>
+                
+                <div class="menu">
+                    <a href="#">উপকার</a>
+                    <a href="{% url 'job_list' %}">ক্যারিয়ার</a>
+                    <a href="{% url 'savings' %}">সঞ্চয়</a>
+                    <a href="{% url 'post_list' %}">কর্মসূচী</a>
+                    <a href="{% url 'services' %}">যোগাযোগ</a>
+                </div>
+                <button class="mobile-menu-btn" aria-label="Menu">&#9776;</button>
+                <a href="{% url 'login' %}" class="login-btn">LOGIN</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                
+                <h2 class="footer-logo">Angaria Small Business Co Society LTD</h2>
+
+                <nav class="footer-nav">
+                    <a href="{% url 'home' %}">Home</a>
+                    <a href="{% url 'services' %}">Services</a>
+                    <a href="{% url 'savings' %}">Savings</a>
+                    <a href="{% url 'job_list' %}">Career</a>
+                    <a href="{% url 'post_list' %}">Programmes</a>
+                </nav>
+
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/Angariasmallbusiness/about/?_rdr" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/Angariasmallbusiness/about/?_rdr" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.facebook.com/Angariasmallbusiness/about/?_rdr" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+
+                <p class="footer-copyright">
+                    Copyright &copy;2025 All rights reserved | This website is made with <span class="heart">&hearts;</span> by Angaria IT Team
+                </p>
+
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // আপনি ভবিষ্যতে মোবাইল মেনু দেখাতে এই কোড ব্যবহার করতে পারেন
+        // const menuBtn = document.querySelector('.mobile-menu-btn');
+        // const menu = document.querySelector('.main-nav .menu');
+        // menuBtn.addEventListener('click', () => {
+        //     menu.classList.toggle('active');
+        // });
+    </script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. Select the button and the menu div
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const menu = document.querySelector('.menu');
+
+        // 2. Add click event listener
+        if (menuBtn && menu) {
+            menuBtn.addEventListener('click', () => {
+                // 3. Toggle the 'active' class defined in CSS
+                menu.classList.toggle('active');
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

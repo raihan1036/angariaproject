@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}চাকরির সুযোগ{% endblock %}
+
+{% block extra_css %}
+<style>
+    .career-section {
+        padding: 50px 0;
+        background-color: #f4f7f6; /* হালকা ব্যাকগ্রাউন্ড */
+    }
+    .career-container {
+        width: 90%;
+        max-width: 900px; /* কন্টেন্ট একটি নির্দিষ্ট প্রস্থের মধ্যে থাকবে */
+        margin: 0 auto;
+    }
+    .career-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .career-header h1 {
+        font-size: 2.8rem;
+        color: #0a2540;
+        margin-bottom: 15px;
+    }
+    .career-header p {
+        font-size: 1.1rem;
+        color: #555;
+    }
+
+    .job-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* --- নতুন জব কার্ড ডিজাইন --- */
+    .job-card {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+        margin-bottom: 25px;
+        padding: 25px;
+        display: flex;
+        flex-wrap: wrap; /* ছোট স্ক্রিনের জন্য */
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        border: 1px solid #e0e0e0;
+    }
+    .job-card:hover {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        transform: translateY(-5px); /* হোভার করলে কার্ডটি উপরে উঠবে */
+    }
+
+    .job-details {
+        flex: 1; /* বেশিরভাগ জায়গা নেবে */
+        min-width: 300px; /* একটি ন্যূনতম প্রস্থ */
+    }
+    .job-company-logo {
+        flex-basis: 100px; /* লোগোর জন্য নির্দিষ্ট জায়গা */
+        text-align: right;
+    }
+    .job-company-logo img {
+        max-width: 100px;
+        max-height: 50px;
+        border-radius: 5px;
+    }
+
+    .job-title {
+        font-size: 1.6rem;
+        font-weight: bold;
+        color: #0070f0; /* আপনার সাইটের লিঙ্ক কালার */
+        margin: 0 0 5px 0;
+        text-decoration: none;
+    }
+    .job-title:hover {
+        text-decoration: underline;
+    }
+    .job-company {
+        font-size: 1.1rem;
+        color: #333;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    
+    .job-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        color: #555;
+        font-size: 0.95rem;
+    }
+    .job-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 8px; /* আইকন এবং টেক্সটের মধ্যে ফাঁকা */
+    }
+    .job-meta-item i {
+        color: #0070f0; /* আইকন কালার */
+    }
+
+    /* --- ডেডলাইন --- */
+    .job-deadline {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #d9534f; /* ডেডলাইনের জন্য লাল রঙ */
+        font-weight: bold;
+        font-size: 0.95rem;
+        flex-basis: 100%; /* ছোট স্ক্রিনে পুরো প্রস্থ নেবে */
+        margin-top: 15px;
+    }
+    
+    /* রেসপন্সিভ অ্যাডজাস্টমেন্ট */
+    @media (min-width: 768px) {
+        .job-deadline {
+            flex-basis: auto; /* বড় স্ক্রিনে অটো প্রস্থ */
+            margin-top: 0;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="career-section">
+    <div class="career-container">
+        <header class="career-header">
+            <h1>চাকরির সুযোগ</h1>
+            <p>আমাদের সাথে আপনার ক্যারিয়ার গড়ুন।</p>
+        </header>
+        
+        <ul class="job-list">
+            {% for job in jobs %}
+            <li class="job-card">
+                <!-- চাকরির বিস্তারিত অংশ -->
+                <div class="job-details">
+                    <a href="{% url 'job_detail' job.pk %}" class="job-title">{{ job.title }}</a>
+                    <p class="job-company">{{ job.company_name }}</p>
+                    
+                    <div class="job-meta">
+                        {% if job.location %}
+                        <span class="job-meta-item">
+                            <i class="fas fa-map-marker-alt"></i> {{ job.location }}
+                        </span>
+                        {% endif %}
+                        {% if job.experience %}
+                        <span class="job-meta-item">
+                            <i class="fas fa-briefcase"></i> {{ job.experience }}
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    {% if job.short_description %}
+                        <p style="color: #555; margin-top: 15px; font-size: 0.9rem;">
+                            {{ job.short_description }}
+                        </p>
+                    {% endif %}
+                </div>
+
+                <!-- কোম্পানির লোগো অংশ -->
+                {% if job.company_logo %}
+                <div class="job-company-logo">
+                    <img src="{{ job.company_logo.url }}" alt="{{ job.company_name }} Logo">
+                </div>
+                {% endif %}
+
+                <!-- ডেডলাইন অংশ -->
+                {% if job.application_deadline %}
+                <div class="job-deadline">
+                    <i class="fas fa-calendar-times"></i> Deadline: {{ job.application_deadline|date:"d M Y" }}
+                </div>
+                {% endif %}
+            </li>
+            {% empty %}
+            <li class="job-card" style="text-align: center; display: block;">
+                <p>আপাতত কোনো চাকরির সার্কুলার নেই।</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+{% endblock content %}

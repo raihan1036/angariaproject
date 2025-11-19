@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}সেবা - যোগাযোগ{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Contact Page Specific Styles */
+    .contact-section {
+        background-color: #f8f8f8;
+        padding: 60px 0;
+        text-align: center;
+    }
+
+    .contact-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 30px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-content h1 {
+        color: #0a2540;
+        margin-bottom: 30px;
+        font-size: 2.5rem;
+    }
+
+    .contact-info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .contact-info-item {
+        background-color: #e6f7ff; /* Light blue background */
+        padding: 25px;
+        border-radius: 8px;
+        text-align: left;
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .contact-info-item i {
+        font-size: 2.5rem;
+        color: #0070f0; /* Blue icon */
+        min-width: 40px; /* Ensure icon has space */
+    }
+    .contact-info-item .info-text h3 {
+        margin: 0 0 5px 0;
+        color: #0a2540;
+        font-size: 1.3rem;
+    }
+    .contact-info-item .info-text p {
+        margin: 0;
+        color: #555;
+        font-size: 1rem;
+    }
+
+    /* For icons, we'll use Font Awesome (needs to be linked in base.html) */
+    /* For now, text placeholders will work */
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .contact-content {
+            padding: 20px;
+            margin: 0 15px;
+        }
+        .contact-content h1 {
+            font-size: 2rem;
+        }
+        .contact-info-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="contact-section">
+    <div class="contact-content">
+        <h1>আমাদের সাথে যোগাযোগ করুন</h1>
+        <p>আপনার যেকোনো প্রশ্ন বা তথ্যের জন্য আমাদের সাথে যোগাযোগ করতে পারেন।</p>
+
+        <div class="contact-info-grid">
+            <div class="contact-info-item">
+                <i class="fas fa-map-marker-alt"></i> 
+                <div class="info-text">
+                    <h3>ঠিকানা</h3>
+                    <p>আঙ্গারিয়া ক্ষুদ্র ব্যবসায়ী ও সমবায় সমিতি লিঃ</p>
+                    <p>আঙ্গারিয়া বাজার, শরীয়তপুর সদর, শরীয়তপুর-০৩</p>
+                    <p>📍23°11'37.2"N 90°19'18.5"E</p>
+                </div>
+            </div>
+
+            <div class="contact-info-item">
+                <i class="fas fa-phone-alt"></i>
+                <div class="info-text">
+                    <h3>ফোন</h3>
+                    <p>+880 1716 684 709</p>
+                    <p>+880 1324 444 333</p>
+                    <p>+880 1332 526 079</p>
+                    <p>+880 1324 444 314</p>
+                </div>
+            </div>
+
+            <div class="contact-info-item">
+                <i class="fas fa-envelope"></i>
+                <div class="info-text">
+                    <h3>ইমেইল</h3>
+                    <p>angariasmallbusiness6940@gmail.com</p>
+                    <p>madaripursavings6940@gmail.com</p>
+                </div>
+            </div>
+            <div class="contact-info-item">
+                <i class="fas fa-clock"></i>
+                <div class="info-text">
+                    <h3>কর্মঘণ্টা</h3>
+                    <p>শনিবার - বৃহস্পতিবার: সকাল ৮টা - সন্ধ্যা ৬টা</p>
+                    <p>শুক্রবার: বন্ধ</p> 
+                </div>
+            </div>
+            <div class="contact-info-item">
+                <i class="fas fa-bars"></i>
+                <div class="info-text">
+                    <h3>গোসাইর হাট</h3>
+                    <h4>ব্রাঞ্চ মেনেজারঃ ফয়সাল</h4>
+                    <p>+880 1324 444 334</p>
+                    <p>+880 1324 444 324</p>
+                    <p>gosairhaat.angariait@gmail.com</p> 
+                </div>
+            </div>
+            <div class="contact-info-item">
+                <i class="fas fa-bars"></i>
+                <div class="info-text">
+                    <h3>নড়িয়া</h3>
+                    <h4>+880 1324 444 309</h4>
+                    <p>naria.angariait@gmail.com</p>
+                     
+                </div>
+            </div>
+            <div class="contact-info-item">
+                <i class="fas fa-bars"></i>
+                <div class="info-text">
+                    <h3>মডের হাট</h3>
+                    <h4>+880 1332 526 066</h4>
+                    <p>moderhat.angariait@gmail.com</p>
+                      
+                </div>
+            </div>
+            <div class="contact-info-item">
+                <i class="fas fa-bars"></i>
+                <div class="info-text">
+                    <h3>ড্যামুড্ডা</h3>
+                    <h4>+880 1324 444 338</h4>
+                    <p>damudda.angariait@gmail.com</p>
+                     
+                </div>
+            </div>
+
+            <div class="contact-info-item">
+                <i class="fas fa-bars"></i>
+                <div class="info-text">
+                    <h3>জাজিরা</h3>
+                    <h4>+880 1332 526 076</h4>
+                    <p>jazira.angariait@gmail.com</p>
+                     
+                </div>
+            </div>
+
+
+
+        </div>
+            
+        </div>
+    </div>
+</section>
+{% endblock content %}

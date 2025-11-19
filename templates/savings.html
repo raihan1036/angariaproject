@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}সঞ্চয় প্ল্যানসমূহ{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* --- সঞ্চয় পেজের স্টাইল --- */
+    .savings-section {
+        padding: 60px 0;
+        /* 💡 CSS ফিক্স: '#rgb(...)' একটি অবৈধ সিনট্যাক্স, '#' রিমুভ করা হয়েছে */
+        background-color: rgb(26, 28, 59); 
+    }
+
+    .savings-container {
+        width: 90%;
+        max-width: 1300px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .savings-container h2 {
+        font-size: 2.8rem;
+        color: #ffffff;
+        margin-bottom: 20px;
+    }
+    
+    .savings-container p {
+        font-size: 1.1rem;
+        color: #f5f5f5;
+        margin-bottom: 50px;
+    }
+
+    .savings-grid {
+        display: grid;
+        /* ৬টি কার্ডের জন্য একটি ভালো গ্রিড লেআউট */
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        justify-content: center;
+    }
+
+    .plan-card {
+        background-color: white;
+        border-radius: 10px;
+        
+        /* --- ছায়া (Shadow) --- */
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        
+        /* --- পপ-আপ অ্যানিমেশন --- */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* --- হোভার (Hover) এফেক্ট: পপ-আপ এবং শ্যাডো --- */
+    .plan-card:hover {
+        transform: scale(1.05); /* কার্ডটি বড় হবে */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* ছায়া আরও গভীর হবে */
+    }
+
+    .plan-card .plan-header {
+        padding: 25px 20px;
+        /* 💡 CSS ফিক্স: '#' রিমুভ করা হয়েছে */
+        border-bottom: 1px solid rgb(26, 28, 59); 
+    }
+
+    .plan-card .plan-name {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #333;
+        margin: 0;
+    }
+
+    .plan-card .plan-body {
+        padding: 30px 25px;
+        flex-grow: 1; /* বাটনকে নিচে রাখতে সাহায্য করবে */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .plan-card .plan-price {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #0070f0; /* আপনার সাইটের লোগো কালার */
+        margin-bottom: 25px;
+    }
+    .plan-card .plan-price span {
+        font-size: 1.5rem;
+    }
+
+    .plan-card .plan-features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 30px 0;
+        text-align: left;
+        flex-grow: 1; /* বাটনকে নিচে রাখতে সাহায্য করবে */
+    }
+
+    .plan-card .plan-features li {
+        margin-bottom: 12px;
+        color: #555;
+    }
+    /* চেকমার্ক আইকন (ঐচ্ছিক) */
+    .plan-card .plan-features li::before {
+        content: '✔';
+        color: #007bff; /* আপনার সাইটের সবুজ বাটন কালার */
+        margin-right: 10px;
+        font-weight: bold;
+    }
+
+    .plan-card .plan-button {
+        background-color: #007bff;
+        color: rgb(26, 28, 59); /* আপনার নতুন রঙ */
+        padding: 12px 25px;
+        border-radius: 5px;
+        font-weight: bold;
+        text-decoration: none;
+        display: block;
+        transition: background-color 0.3s ease;
+    }
+    .plan-card .plan-button:hover {
+        background-color: #007bff;
+    }
+
+    /* --- একটি কার্ডকে 'ফিচার্ড' হিসেবে হাইলাইট করা (যেমন ২০০০৳) --- */
+    .plan-card.featured {
+        background-color: #0a2540; /* ডার্ক ব্যাকগ্রাউন্ড */
+        color: rgb(26, 28, 59); /* আপনার নতুন রঙ */
+        transform: scale(1.05); /* ডিফল্টভাবে বড় থাকবে */
+    }
+    .plan-card.featured .plan-name {
+        color: rgb(26, 28, 59); /* আপনার নতুন রঙ */
+    }
+    .plan-card.featured .plan-price {
+        color: #007bff; /* সবুজ প্রাইস */
+    }
+    .plan-card.featured .plan-features li {
+        /* 💡 CSS ফিক্স: '#' রিমুভ করা হয়েছে */
+        color: rgb(26, 28, 59); 
+    }
+
+    /* --- কাস্টম কন্টাক্ট কার্ডের জন্য বিশেষ স্টাইল --- */
+    .plan-card.contact-card {
+        background-color: #f4f8ff; /* একটি ভিন্ন, হালকা নীল ব্যাকগ্রাউন্ড */
+        text-align: center;
+        justify-content: center; /* কন্টেন্ট ভার্টিক্যালি সেন্টারে রাখা */
+        border: 2px dashed #0070f0; /* আপনার লোগোর রঙের ড্যাশড বর্ডার */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* হালকা শ্যাডো */
+    }
+
+    /* --- হোভার এফেক্ট বন্ধ করা --- */
+    .plan-card.contact-card:hover {
+        transform: none; /* কোনো পপ-আপ বা মুভমেন্ট হবে না */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* শ্যাডো অপরিবর্তিত থাকবে */
+    }
+
+    .contact-card .plan-body {
+        justify-content: center;
+        align-items: center;
+        padding: 40px 25px; /* সবদিকে সমান প্যাডিং */
+    }
+
+    .contact-card .plan-body h3 {
+        font-size: 1.8rem;
+        color: #0a2540;
+        margin-bottom: 15px;
+    }
+
+    .contact-card .plan-body .contact-card-text {
+        color: #333;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="savings-section">
+    <div class="savings-container">
+        <h2>আমাদের সঞ্চয় প্ল্যানসমূহ</h2>
+        <p>আপনার সুবিধা অনুযায়ী যেকোনো একটি প্ল্যান বেছে নিন। প্রতিটি প্ল্যানের মেয়াদ ১.৫ বছর। </p>
+
+        <div class="savings-grid">
+            
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h3 class="plan-name">সঞ্চয় ৬০০৳</h3>
+                </div>
+                <div class="plan-body">
+                    <div class="plan-price">৬০০ <span>৳/মাসিক</span></div>
+                    <ul class="plan-features">
+                        <li>মাসিক জমা: ৬০০৳</li>
+                        <li>সম্ভাব্য মুনাফা: ১.৫ বছরের জন্য ১১,৬৬৪৳</li>
+                        <li>শর্তহীন</li>
+                    </ul>
+                    <a href="https://forms.gle/GDSdE9UDybU25C1T8" target="_blank" rel="noopener noreferrer" class="plan-button">আবেদন করুন</a>
+                </div>
+            </div>
+
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h3 class="plan-name">সঞ্চয় ১০০০৳</h3>
+                </div>
+                <div class="plan-body">
+                    <div class="plan-price">১০০০ <span>৳/মাসিক</span></div>
+                    <ul class="plan-features">
+                        <li>মাসিক জমা: ১০০০ টাকা</li>
+                        <li>সম্ভাব্য মুনাফা: ১.৫ বছরের জন্য ১৯,৪৪০৳</li> 
+                        <li>সহজ শর্ত</li>
+                    </ul>
+                    <a href="https://forms.gle/GDSdE9UDybU25C1T8" target="_blank" rel="noopener noreferrer" class="plan-button">আবেদন করুন</a>
+                </div>
+            </div>
+
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h3 class="plan-name">সঞ্চয় ২০০০৳</h3>
+                </div>
+                <div class="plan-body">
+                    <div class="plan-price">২০০০ <span>৳/মাসিক</span></div> 
+                    <ul class="plan-features">
+                        <li>মাসিক জমা: ২০০০৳</li>
+                        <li>সম্ভাব্য মুনাফা: ১.৫ বছরের জন্য ৩৮,৮৮০৳</li>
+                        <li>সহজ শর্ত</li>
+                    </ul>
+                    <a href="https://forms.gle/GDSdE9UDybU25C1T8" target="_blank" rel="noopener noreferrer" class="plan-button">আবেদন করুন</a>
+                </div>
+            </div>
+
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h3 class="plan-name">সঞ্চয় ৩০০০৳</h3>
+                </div>
+                <div class="plan-body">
+                    <div class="plan-price">৩০০০ <span>৳/মাসিক</span></div>
+                    <ul class="plan-features">
+                        <li>মাসিক জমা: ৩০০০৳</li>
+                        <li>সম্ভাব্য মুনাফা: ১.৫ বছরের জন্য ৫৮,৩২০৳</li> 
+                        <li>বিশেষ সুবিধা</li>
+                    </ul>
+                    <a href="https://forms.gle/GDSdE9UDybU25C1T8" target="_blank" rel="noopener noreferrer" class="plan-button">আবেদন করুন</a>
+                </div>
+            </div>
+
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h3 class="plan-name">সঞ্চয় ৪০০০৳</h3> 
+                </div>
+                <div class="plan-body">
+                    <div class="plan-price">৪০০০ <span>৳/মাসিক</span></div>
+                    <ul class="plan-features">
+                        <li>মাসিক জমা: ৪০০০৳ </li>
+                        <li>সম্ভাব্য মুনাফা: ১.৫ বছরের জন্য ৭৭,৭৬০৳</li> 
+                        <li>প্রিমিয়াম সুবিধা</li>
+                    </ul>
+                    <a href="https://forms.gle/GDSdE9UDybU25C1T8" target="_blank" rel="noopener noreferrer" class="plan-button">আবেদন করুন</a>
+                </div>
+            </div>
+
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h3 class="plan-name">সঞ্চয় ৫০০০৳</h3> </div>
+                <div class="plan-body">
+                    <div class="plan-price">৫০০০ <span>৳/মাসিক</span></div>
+                    <ul class="plan-features">
+                        <li>মাসিক জমা: ৫০০০৳ </li>
+                        <li>সম্ভাব্য মুনাফা: ১.৫ বছরের জন্য ৯৭,২০০৳</li>
+                        <li>প্রিমিয়াম সুবিধা</li>
+                    </ul>
+                    <a href="https://forms.gle/GDSdE9UDybU25C1T8" target="_blank" rel="noopener noreferrer" class="plan-button">আবেদন করুন</a>
+                </div>
+            </div>
+
+            <div class="plan-card contact-card">
+                <div class="plan-body">
+                    <h3>আরও তথ্য প্রয়োজন?</h3>
+                    <p class="contact-card-text">
+                        আপনার প্রয়োজন অনুযায়ী কাস্টম কোনো প্ল্যানের জন্য, অথবা যেকোনো তথ্যের জন্য সরাসরি আমাদের সাথে যোগাযোগ করুন।+880 1716 684 709
+
+<br>+880 1324 444 333
+                    </p>
+                </div>
+            </div>
+            
+        </div> </div> </section> {% endblock content %}
